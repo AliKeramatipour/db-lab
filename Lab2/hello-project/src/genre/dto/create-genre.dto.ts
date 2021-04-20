@@ -1,3 +1,6 @@
+import { ApiProperty } from '@nestjs/swagger'
 export default class CreateGenreDto {
-    readonly type: string;
-  }
+  
+  @ApiProperty({type: String})
+  readonly type: string;
+}

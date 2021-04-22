@@ -1,25 +1,26 @@
-import { Body, Controller, Header, Get, ParseIntPipe, Post, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Header, Get, Post, Put, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import CreateUserDto from './dto/create-user.dto';
 import delUserDto from './dto/del-user.dto';
 import updUserDto from './dto/upd-user.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Public } from 'src/auth/custom-decorator';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly usersService: UserService) {}
 
-//'postUser()' will handle the creating of new User
   @Header('Content-Type', 'application/json')
   @ApiResponse({status:201, description: 'Success: User added.'})
   @ApiResponse({status:400, description: 'Failure: Failed to add user.'})
+  @Public()
   @Post('post')
   postUser( @Body() user: CreateUserDto) {
     return this.usersService.insert(user);
   }
 
-  
-// 'getAll()' returns the list of all the existing users in the database
+  @ApiBearerAuth()
   @Header('Content-Type', 'application/json')
   @ApiResponse({ status:200, description: 'Success: Recieved all users.' })
   @ApiResponse({ status:500, description: 'Failure: Request failed.' })
@@ -28,8 +29,7 @@ export class UserController {
     return this.usersService.getAllUsers();
   }
 
-//'getBooks()' return all the books which are associated with the user 
-// provided through 'userID' by the request  
+  @ApiBearerAuth()
   @Header('Content-Type', 'application/json')
   @ApiResponse({ status:200, description: 'Success: Recieved user\'s books.' })
   @ApiResponse({ status:500, description: 'Failure: Failed to retrieve user\'s books.' })
@@ -38,6 +38,7 @@ export class UserController {
     return this.usersService.getBooksOfUser(user);
   }
 
+  @ApiBearerAuth()
   @Header('Content-Type', 'application/json')
   @ApiResponse({ status:200, description: 'Success: User deleted.' })
   @ApiResponse({ status:400, description: 'Failure: Deletion failed.' })
@@ -47,6 +48,7 @@ export class UserController {
       return this.usersService.delete(delUser);
   }
 
+  @ApiBearerAuth()
   @Header('Content-Type', 'application/json')
   @ApiResponse({ status:201, description: 'Success: User updated.' })
   @ApiResponse({ status:400, description: 'Failure: Update failed.' })

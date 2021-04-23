@@ -1,16 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, OneToOne, JoinColumn, PrimaryColumn } from 'typeorm';
 import UserEntity from './user.entity';
 
 @Entity()
 export default class ResumeEntity extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn()
+    username: string;
 
     @Column()
-    name: string;
-
-    @Column()
-    password: string;
+    info: string;
 
     @OneToOne(() => UserEntity)
     @JoinColumn()

@@ -4,17 +4,14 @@ import ProjectEntity from './project.entity';
 import UserEntity from './user.entity';
 @Entity()
 export default class RequestEntity extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryColumn()
+    username: string;
 
-    @Column()
-    userID: number;
-
-    @Column()
+    @PrimaryColumn()
     projectID: number;
 
     @Column({ length: 500 })
-    notes: string;
+    info: string;
 
     @Column({ length: 500 })
     date: string;

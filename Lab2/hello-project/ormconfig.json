@@ -10,7 +10,7 @@
   
   "password": "12345",
   
-  "database": "dblab2-part6",
+  "database": "dblab2-part6v2",
   
   "entities": ["dist/**/**.entity{.ts,.js}"],
   

@@ -116,7 +116,7 @@ export class JobseekersService {
         projectEntity.skills = skills;
         projectEntity.budget = budget;
         projectEntity.due_date = due_date;
-        projectEntity.creator_user = creator_user;
+        projectEntity.user = await this.getUser(creator_user);
 
         await ProjectEntity.save(projectEntity);
         return projectEntity;
@@ -133,7 +133,7 @@ export class JobseekersService {
         projectEntity.skills = skills;
         projectEntity.budget = budget;
         projectEntity.due_date = due_date;
-        projectEntity.creator_user = creator_user;
+        projectEntity.user = await this.getUser(creator_user);
         
         await ProjectEntity.save(projectEntity);
         return projectEntity;
@@ -180,6 +180,8 @@ export class JobseekersService {
         reqEntity.info = info;
         reqEntity.projectID = projectID;
         reqEntity.username = username;
+        reqEntity.project = await this.getProject(projectID);
+        reqEntity.user = await this.getUser(username);
 
         await RequestEntity.save(reqEntity);
         return reqEntity;
@@ -202,6 +204,8 @@ export class JobseekersService {
     async deleteRequest(username: string, reqDeletionDetails : RequestDeleteDto){
         const {projectID} = reqDeletionDetails;
         await this.getRequest(username, projectID);
+        await this.getUser(username);
+        await this.getProject(projectID);
         RequestEntity.delete({username:username, projectID:projectID});
         return;
     }
@@ -229,6 +233,7 @@ export class JobseekersService {
         const resumeEntity: ResumeEntity = ResumeEntity.create();
         resumeEntity.info = info;
         resumeEntity.username = username;
+        resumeEntity.user = await this.getUser(username);
         await ResumeEntity.save(resumeEntity);
         return resumeEntity;
     }

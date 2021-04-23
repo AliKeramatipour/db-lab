@@ -22,9 +22,6 @@ export default class ProjectEntity extends BaseEntity {
     @Column({ length: 500 })
     due_date: string;
 
-    @Column({ length: 500 })
-    creator_user: string;
-
     @ManyToOne(type => UserEntity, user => user.projects)
     user: UserEntity;
     

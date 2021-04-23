@@ -19,7 +19,7 @@ export default class UserEntity extends BaseEntity {
     @Column({ length: 500 })
     phone: string;
 
-    @OneToOne(() => ResumeEntity, resumeEntity => resumeEntity.userEntity)
+    @OneToOne(() => ResumeEntity, resumeEntity => resumeEntity.user)
     resumeEntity: ResumeEntity;
 
     @OneToMany(type => ProjectEntity, project => project.user)

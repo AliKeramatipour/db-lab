@@ -11,5 +11,5 @@ export default class ResumeEntity extends BaseEntity {
 
     @OneToOne(() => UserEntity)
     @JoinColumn()
-    userEntity: UserEntity;
+    user: UserEntity;
 }
